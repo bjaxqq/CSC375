@@ -2,6 +2,8 @@
 
 ## Skill Description
 
+P3. Implement an efficient solution to a problem that uses dynamic programming
+
 ## Assignment Instructions
 
 P3. Implement an efficient solution to a problem that uses dynamic programming
