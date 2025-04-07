@@ -1,8 +1,7 @@
-
 /****************
  * Splay Tree
  * Author: Christian Duncan
- * Authors: ... Additional ones (insert your team members!)
+ * Authors: Brooks Jackson
  * Spring 2025
  * 
  * This is a basic implementation of a Splay Tree which is augmented with a
@@ -78,6 +77,10 @@ public class SplayTree<E> {
                 
                 TreeNode<E> updateNode = location;
                 // Insert code here!
+                while (updateNode != null) {
+                    updateNode.size++;
+                    updateNode = updateNode.parent;
+                }
                 // ********************
 
 
@@ -131,7 +134,10 @@ public class SplayTree<E> {
             // size by 1 (to reflect the newly inserted node)
 
             TreeNode<E> updateNode = parent;
-            // Insert code here!
+            while (updateNode != null) {
+                updateNode.size--;
+                updateNode = updateNode.parent;
+            }
             // ********************
 
             
@@ -251,10 +257,14 @@ public class SplayTree<E> {
             int comp = compare(curr.element, e);
             if (comp == 0) {
                 // Found the element
-                if (inclusive) count++;  // Include this node as well
+                if (curr.left != null) count += curr.left.size;
+                if (inclusive) count++; // Include this node as well
                 break;
             } else if (comp < 0) {
                 // Element e must lie to the right
+                // Everything in the left subtree plus the current node is less than e
+                count += 1; // Count the current node
+                if (curr.left != null) count += curr.left.size;
                 curr = curr.right;
             } else {
                 // Element e must lie to the left (no change to count)
@@ -298,6 +308,16 @@ public class SplayTree<E> {
         // The only two node's whose sizes changed as a result of rotation are u and v
         // u's size remains the same
         // v's size can just be computed
+        
+        // Calculate v's new size based on its children
+        v.size = 1; // Start with itself
+        if (v.left != null) v.size += v.left.size;
+        if (v.right != null) v.size += v.right.size;
+        
+        // u's size remains the same overall, but to be safe:
+        u.size = 1; // Start with itself
+        if (u.left != null) u.size += u.left.size;
+        if (u.right != null) u.size += u.right.size;
     }
 
     // Perform a right rotation of the given node U and its left child V
@@ -329,6 +349,16 @@ public class SplayTree<E> {
         // The only two node's whose sizes changed as a result of rotation are u and v
         // u's size remains the same
         // v's size can just be computed
+        
+        // Calculate v's new size based on its children
+        v.size = 1; // Start with itself
+        if (v.left != null) v.size += v.left.size;
+        if (v.right != null) v.size += v.right.size;
+        
+        // u's size remains the same overall, but to be safe:
+        u.size = 1; // Start with itself
+        if (u.left != null) u.size += u.left.size;
+        if (u.right != null) u.size += u.right.size;
     }
 
     // Perform a splay of the current node all the way to the root
